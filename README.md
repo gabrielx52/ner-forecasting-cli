@@ -76,6 +76,13 @@ Forecast level:   132,731,751
 
 ## Approach and key tradeoffs
 
+I started by using Claude to draft a pre-plan weighing the top forecasting
+options with pros and cons, then sanity-checked those suggestions against
+established forecasting tools and methodologies before committing. I kept the
+implementation small and time-boxed it to ~4 hours, and leaned on the PyPI
+packaging guide as a structural baseline since most CLIs ship as PyPI packages.
+
+
 **Forecast the level, report the change.** The seasonally adjusted level
 (`NER_SA`) is a smooth, trending series, so it is the easier and more stable
 thing to model. The headline change is derived by subtracting the last observed
@@ -223,4 +230,6 @@ so it mirrors a production CLI. It is intentionally **not** published to PyPI;
   Included forecast model recommendations tailored to window duration
 - **Support live data** Either via API or user upload
 - **Frontend with persistent storage**
-  Web UI that supports data visualization, past prediction comparison 
+  Web UI that supports data visualization, past prediction comparison and 
+  the ability to check previous report's accuracy if new data has been uploaded 
+  for any windows 
