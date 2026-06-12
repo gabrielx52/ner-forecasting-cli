@@ -19,11 +19,16 @@ The project targets **Python 3.14** and uses [`uv`](https://docs.astral.sh/uv/)
 for environment and dependency management.
 
 ```bash
-# 1. Clone, then from the repository root create the environment.
-uv venv
+# 1. From the repository root, create the venv and install the package plus
+#    dev tools. `uv sync` always installs into the project's .venv, so the
+#    environment used to install is the same one `uv run` executes in.
+UV_COMPILE_BYTECODE=1 uv sync --extra dev
 
-# 2. Install the package (and dev tools) in editable mode.
-uv pip install -e ".[dev]"
+# 2. One-time warm-up (recommended on macOS). The first time the freshly
+#    installed native libraries (numpy, scipy, pandas, statsmodels) are loaded,
+#    macOS verifies them, which can take 1-2 minutes at near-zero CPU. Doing it
+#    here gets that out of the way so your first real command is fast.
+uv run python -c "import pandas, numpy, scipy, statsmodels.tsa.holtwinters"
 
 # 3. Run the CLI.
 uv run nerd-cast --help
@@ -32,10 +37,18 @@ uv run nerd-cast --help
 If you prefer plain `pip`:
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3.14 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
+python -c "import pandas, numpy, scipy, statsmodels.tsa.holtwinters"  # one-time warm-up
 nerd-cast --help
 ```
+
+> **First-run note (macOS):** the very first command that loads the scientific
+> stack may pause for a minute or two while the OS verifies the newly installed
+> native libraries — this is a one-time system check, not the tool hanging.
+> Every later command runs in a few seconds. The warm-up step above front-loads
+> this cost into setup. `--help`, `history`, and the `seasonal-naive` model do
+> not load `statsmodels` at all; only the ETS `forecast` / `explain` commands do.
 
 ### Commands
 

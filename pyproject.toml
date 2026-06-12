@@ -7,9 +7,9 @@ requires-python = ">=3.14"
 license = { file = "LICENSE" }
 authors = [{ name = "Gabriel Meringolo" }]
 dependencies = [
-    "typer>=0.12",
-    "pandas>=2.2",
-    "statsmodels>=0.14",
+    "typer>=0.12,<1.0",
+    "pandas>=2.2,<3.0",
+    "statsmodels>=0.14,<1.0",
 ]
 
 [project.scripts]
@@ -17,10 +17,10 @@ nerd-cast = "nerd_cast.cli:app"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=8.0",
-    "pytest-mock>=3.14",
-    "coverage>=7.6",
-    "ruff>=0.6",
+    "pytest>=8.0,<10.0",
+    "pytest-mock>=3.14,<4.0",
+    "coverage>=7.6,<8.0",
+    "ruff>=0.6,<1.0",
 ]
 
 [build-system]

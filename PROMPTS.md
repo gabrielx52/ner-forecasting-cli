@@ -260,6 +260,84 @@ touched.
 
 ---
 
+## Session 7 — "It's hanging on `nerd-cast --help`"
+
+**Tool:** Claude Code (Opus 4.8)
+
+**Prompt (abridged):**
+
+> [Fresh-environment install transcript.] It's hanging on
+> `python3.14 -m uv run nerd-cast --help`.
+
+**My response:** Diagnosed it by timing imports: `import statsmodels` took ~12s
+cold, and `cli.py` pulled statsmodels in at module load (via `models/__init__.py`
+and `statistical.py`), so even `--help` paid that cost before printing. Fixed it
+by making statsmodels a **lazy import** — moved the statsmodels imports out of
+module scope in `statistical.py` and into `EtsForecaster.fit()`, guarded the one
+type annotation under `TYPE_CHECKING`, and added `from __future__ import
+annotations`. Verified statsmodels is no longer in `sys.modules` after importing
+the CLI, and that `--help` / `history` / the seasonal-naive forecast no longer
+load it; tests stayed 57/57 at 100% coverage with byte-identical ETS output.
+
+**What I did with the output:** Used as-is, with the lazy-import edit applied to
+`statistical.py`. Also flagged the path mismatch — the user was running from a
+separate clone, so the fix needed to be pulled into that copy.
+
+---
+
+## Session 8 — A minute-plus wait on a fresh clone
+
+**Tool:** Claude Code (Opus 4.8)
+
+**Prompt:**
+
+> it was like a minute + wait, maybe a few minutes. A thing of note, this was a
+> fresh clone of the repo and I was following the README instructions to ensure
+> it worked.
+
+**My response:** The "fresh clone" detail reframed the problem. Reproduced it in
+throwaway copies and found the first command sat for ~2.5 minutes at **2% CPU** —
+blocked, not computing — then every later command ran in ~3-4s. That low-CPU,
+one-time, cached-afterward signature is **macOS Gatekeeper (`syspolicyd`)
+verifying the freshly installed native libraries** (numpy/scipy/pandas/statsmodels
+`.so` files) on first load. I also caught a README flow bug: `uv pip install`
+without an activated venv had targeted the *system* Python, after which `uv run`
+re-installed into `.venv`. **Rejected** my own earlier "it's `uv run` overhead"
+hypothesis once a direct console-script call proved equally slow on first run.
+
+Fixes (README only; the Session 7 code fix already helped by deferring the
+statsmodels scan to ETS commands): switched setup to a consistent
+`uv sync --extra dev`, added a one-time warm-up import step that absorbs the OS
+verification during setup instead of on the first real command, and added a
+first-run note so the delay is not mistaken for a hang.
+
+**What I did with the output:** Used as-is. Verified the new README flow
+end-to-end and measured the cold-vs-warm gap (2:27 → 3.8s on a second run).
+
+---
+
+## Session 9 — Pin dependencies and commit a lockfile
+
+**Tool:** Claude Code (Opus 4.8)
+
+**Prompt:**
+
+> Yes, you can do both of those. […] don't forget to update the PROMPTS.md like
+> you did earlier.
+
+**My response:** Took up the two follow-ups I had offered. Added upper bounds to
+every dependency in `pyproject.toml` (`pandas>=2.2,<3.0`, `typer>=0.12,<1.0`,
+`statsmodels>=0.14,<1.0`, and capped dev tools) so a fresh resolve cannot pull a
+breaking new major, then generated and kept a **`uv.lock`** (`.gitignore` already
+leaves it tracked) pinning the tested set — notably pandas **2.3.3** instead of
+the bleeding-edge 3.0.3 a loose resolve had chosen. Re-ran the full suite on the
+locked resolution to confirm it stays green, and updated this log.
+
+**What I did with the output:** Used as-is. Pinned the bounds, committed the
+lockfile to the project, and recorded this Session 9.
+
+---
+
 ## Overall assessment of AI output
 
 - **Used as-is:** project structure, the `Forecaster` protocol design, the

@@ -7,16 +7,18 @@ exposes its smoothing parameters and the decomposed level and trend so the
 ``explain`` command can describe *why* it produced a given number.
 """
 
+from __future__ import annotations
+
 import warnings
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 import pandas as pd
-from statsmodels.tools.sm_exceptions import ConvergenceWarning
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
-from statsmodels.tsa.holtwinters.results import HoltWintersResultsWrapper
 
 from nerd_cast.models.base import ForecastResult
 from nerd_cast.models.baseline import _normal_quantile
+
+if TYPE_CHECKING:
+    from statsmodels.tsa.holtwinters.results import HoltWintersResultsWrapper
 
 
 class EtsForecaster:
@@ -48,6 +50,12 @@ class EtsForecaster:
         """
         if len(level_series) < 10:
             raise ValueError("at least ten observations are required to fit ETS")
+        # statsmodels is imported lazily here so that commands which never fit an
+        # ETS model (``--help``, ``history``, the seasonal-naive forecast) do not
+        # pay its multi-second import cost.
+        from statsmodels.tools.sm_exceptions import ConvergenceWarning
+        from statsmodels.tsa.holtwinters import ExponentialSmoothing
+
         self._level_series = level_series.sort_index().astype(float)
         model = ExponentialSmoothing(
             self._level_series,
