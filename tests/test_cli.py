@@ -2,7 +2,7 @@
 
 from typer.testing import CliRunner
 
-from adp_ner.cli import app
+from nerd_cast.cli import app
 
 runner = CliRunner()
 

@@ -2,9 +2,9 @@
 
 import pandas as pd
 
-from adp_ner.explain import Explanation, build_explanation
-from adp_ner.models.baseline import SeasonalNaiveForecaster
-from adp_ner.models.statistical import EtsForecaster
+from nerd_cast.explain import Explanation, build_explanation
+from nerd_cast.models.baseline import SeasonalNaiveForecaster
+from nerd_cast.models.statistical import EtsForecaster
 
 
 def test_build_explanation_populates_all_strands(
@@ -34,7 +34,7 @@ def test_model_beats_baseline_on_real_data(
     real_history_frame: pd.DataFrame,
 ) -> None:
     """On the real series ETS achieves a lower MAE than the baseline."""
-    from adp_ner.data import get_series
+    from nerd_cast.data import get_series
 
     level_series = get_series(real_history_frame)
     explanation = build_explanation(level_series, EtsForecaster())

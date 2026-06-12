@@ -1,4 +1,4 @@
-# adp-ner
+# nerd-cast
 
 A small command-line tool that tracks the monthly **ADP National Employment
 Report (NER)** and forecasts the next print. It lets you:
@@ -26,7 +26,7 @@ uv venv
 uv pip install -e ".[dev]"
 
 # 3. Run the CLI.
-uv run adp-ner --help
+uv run nerd-cast --help
 ```
 
 If you prefer plain `pip`:
@@ -34,26 +34,26 @@ If you prefer plain `pip`:
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-adp-ner --help
+nerd-cast --help
 ```
 
 ### Commands
 
 ```bash
 # Last 12 months of the headline change (seasonally adjusted).
-uv run adp-ner history
+uv run nerd-cast history
 
 # Last 6 months as raw levels instead of changes.
-uv run adp-ner history --months 6 --metric level
+uv run nerd-cast history --months 6 --metric level
 
 # Next month's forecast with a 95% interval (ETS model by default).
-uv run adp-ner forecast
+uv run nerd-cast forecast
 
 # The same forecast from the naive baseline.
-uv run adp-ner forecast --model seasonal-naive
+uv run nerd-cast forecast --model seasonal-naive
 
 # Why the model predicted what it did, plus its backtested accuracy.
-uv run adp-ner explain
+uv run nerd-cast explain
 ```
 
 Every command accepts `--data PATH` to point at a different history CSV, and
@@ -152,8 +152,8 @@ beat against a pure random walk — but ETS clearly and consistently beats the
 trailing-mean baseline this tool ships. Reproduce these numbers with:
 
 ```bash
-uv run adp-ner explain                 # default 36-month window
-uv run adp-ner explain --min-train 60  # wider window
+uv run nerd-cast explain                 # default 36-month window
+uv run nerd-cast explain --min-train 60  # wider window
 ```
 
 ---
@@ -197,7 +197,7 @@ pinwheel-employment-cli/
 ├── data/
 │   └── ADP_NER_history.csv   # bundled ADP National Employment Report history
 ├── src/
-│   └── adp_ner/
+│   └── nerd_cast/
 │       ├── cli.py            # typer app: history / forecast / explain
 │       ├── data.py           # load CSV, slice into date-indexed series
 │       ├── evaluation.py     # walk-forward backtest + MAE / RMSE / MASE

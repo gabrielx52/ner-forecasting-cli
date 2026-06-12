@@ -15,17 +15,17 @@ from typing import Annotated
 
 import typer
 
-from adp_ner.data import (
+from nerd_cast.data import (
     NATIONAL_AGG_RIS,
     NATIONAL_CATEGORY,
     Metric,
     get_series,
     load_history,
 )
-from adp_ner.explain import build_explanation
-from adp_ner.models.base import ForecastResult
-from adp_ner.models.baseline import SeasonalNaiveForecaster
-from adp_ner.models.statistical import EtsForecaster
+from nerd_cast.explain import build_explanation
+from nerd_cast.models.base import ForecastResult
+from nerd_cast.models.baseline import SeasonalNaiveForecaster
+from nerd_cast.models.statistical import EtsForecaster
 
 app = typer.Typer(
     add_completion=False,

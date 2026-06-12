@@ -12,7 +12,7 @@ from typing import Self
 
 import pandas as pd
 
-from adp_ner.models.base import ForecastResult
+from nerd_cast.models.base import ForecastResult
 
 
 class SeasonalNaiveForecaster:

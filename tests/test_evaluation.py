@@ -3,14 +3,14 @@
 import pandas as pd
 import pytest
 
-from adp_ner.evaluation import (
+from nerd_cast.evaluation import (
     BacktestMetrics,
     evaluate,
     score,
     walk_forward,
 )
-from adp_ner.models.baseline import SeasonalNaiveForecaster
-from adp_ner.models.statistical import EtsForecaster
+from nerd_cast.models.baseline import SeasonalNaiveForecaster
+from nerd_cast.models.statistical import EtsForecaster
 
 
 def test_walk_forward_fold_count(linear_level_series: pd.Series) -> None:

@@ -3,8 +3,8 @@
 import pandas as pd
 import pytest
 
-from adp_ner.models.base import Forecaster, ForecastResult
-from adp_ner.models.statistical import EtsForecaster
+from nerd_cast.models.base import Forecaster, ForecastResult
+from nerd_cast.models.statistical import EtsForecaster
 
 
 def test_ets_satisfies_protocol() -> None:

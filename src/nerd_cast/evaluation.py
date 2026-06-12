@@ -16,7 +16,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from adp_ner.models.base import Forecaster
+from nerd_cast.models.base import Forecaster
 
 ForecasterFactory = Callable[[], Forecaster]
 

@@ -15,8 +15,8 @@ from statsmodels.tools.sm_exceptions import ConvergenceWarning
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from statsmodels.tsa.holtwinters.results import HoltWintersResultsWrapper
 
-from adp_ner.models.base import ForecastResult
-from adp_ner.models.baseline import _normal_quantile
+from nerd_cast.models.base import ForecastResult
+from nerd_cast.models.baseline import _normal_quantile
 
 
 class EtsForecaster:

@@ -3,8 +3,8 @@
 import pandas as pd
 import pytest
 
-from adp_ner.models.base import Forecaster, ForecastResult
-from adp_ner.models.baseline import SeasonalNaiveForecaster, _normal_quantile
+from nerd_cast.models.base import Forecaster, ForecastResult
+from nerd_cast.models.baseline import SeasonalNaiveForecaster, _normal_quantile
 
 
 def test_baseline_satisfies_protocol() -> None:

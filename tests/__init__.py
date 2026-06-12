@@ -1,1 +1,1 @@
-"""Test suite for the adp_ner package."""
+"""Test suite for the nerd_cast package."""

@@ -1,9 +1,9 @@
-"""Shared fixtures for the adp_ner test suite."""
+"""Shared fixtures for the nerd_cast test suite."""
 
 import pandas as pd
 import pytest
 
-from adp_ner.data import load_history
+from nerd_cast.data import load_history
 
 
 @pytest.fixture

@@ -10,9 +10,9 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from adp_ner.evaluation import BacktestMetrics, evaluate
-from adp_ner.models.base import Forecaster, ForecastResult
-from adp_ner.models.baseline import SeasonalNaiveForecaster
+from nerd_cast.evaluation import BacktestMetrics, evaluate
+from nerd_cast.models.base import Forecaster, ForecastResult
+from nerd_cast.models.baseline import SeasonalNaiveForecaster
 
 
 @dataclass(frozen=True)

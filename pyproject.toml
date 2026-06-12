@@ -1,5 +1,5 @@
 [project]
-name = "adp-ner"
+name = "nerd-cast"
 version = "0.1.0"
 description = "CLI tool that tracks the ADP National Employment Report and forecasts the next print."
 readme = "README.md"
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-adp-ner = "adp_ner.cli:app"
+nerd-cast = "nerd_cast.cli:app"
 
 [project.optional-dependencies]
 dev = [
@@ -28,7 +28,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/adp_ner"]
+packages = ["src/nerd_cast"]
 
 [tool.ruff]
 line-length = 88
@@ -42,7 +42,7 @@ ignore = ["D203", "D213"]
 convention = "pep257"
 
 [tool.coverage.run]
-source = ["adp_ner"]
+source = ["nerd_cast"]
 branch = true
 
 [tool.coverage.report]

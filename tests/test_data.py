@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from adp_ner.data import (
+from nerd_cast.data import (
     EXPECTED_COLUMNS,
     Metric,
     get_series,
