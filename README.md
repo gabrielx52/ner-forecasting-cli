@@ -1,4 +1,4 @@
-# nerd-cast
+# nerd-cast: National Employment Report Data Forecasting Tool
 
 A small command-line tool that tracks the monthly **ADP National Employment
 Report (NER)** and forecasts the next print. It lets you:
@@ -218,19 +218,9 @@ so it mirrors a production CLI. It is intentionally **not** published to PyPI;
 
 ## What I would build next with another week
 
-- **Component / hierarchical forecasting.** Forecast each industry, census
-  division, and establishment-size series and reconcile them against the
-  National total, then compare top-down vs bottom-up accuracy. The data and the
-  slice accessor already support this.
-- **A second model and automatic order selection.** Add SARIMAX / auto-ARIMA
-  behind the existing `Forecaster` protocol and let `explain` pick the model
-  with the best backtested MASE per slice.
-- **Better prediction intervals.** Replace the normal-approximation band with a
-  simulated or bootstrapped predictive distribution and report interval
-  *coverage* (how often the actual lands inside the stated interval) as a fourth
-  accuracy metric.
-- **Live data ingestion.** A small fetch layer to pull new ADP releases on a
-  schedule, with caching and a `--refresh` flag, so the tool tracks the report
-  rather than a static snapshot.
-- **Richer history view.** Optional plotting / sparkline output and the ability
-  to diff a past forecast against what was actually printed.
+- **Add additional forecasting models**
+- **Support customizable prediction windows**
+  Included forecast model recommendations tailored to window duration
+- **Support live data** Either via API or user upload
+- **Frontend with persistent storage**
+  Web UI that supports data visualization, past prediction comparison 
